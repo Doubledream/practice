@@ -1,6 +1,6 @@
 <template>
 	<div class="goods">
-		<div class="menu-wrapper">
+		<div class="menu-wrapper" ref="menu-wrapper">
 			<ul>
 				<li v-for="item in goods" class="menu-item">
 					<span class="text border-1px" id="text">
@@ -10,7 +10,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="foods-wrapper">
+		<div class="foods-wrapper" ref="foods-wrapper">
 			<ul>
 				<li v-for="item in goods" class="food-list">
 					<h1 class="title">{{item.name}}</h1>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import Bscroll from 'better-scroll';
 const ERR_OK = 0;
 
 export default {
@@ -60,14 +61,24 @@ export default {
       response = response.body;
       if (response.errno === ERR_OK) {
         this.goods = response.data;
+        this.$nextTick(() => {
+          this._initScroll();
+        });
       }
     });
+  },
+  methods: {
+    _initScroll() {
+      this.menuScroll = new Bscroll(this.$refs['menu-wrapper'], {});
+
+      this.foodsScroll = new Bscroll(this.$refs['foods-wrapper'], {});
+    }
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-@import '../../common/stylus/mixin'
+	@import '../../common/stylus/mixin'
 
 	.goods
 		display: flex
