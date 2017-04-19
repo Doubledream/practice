@@ -31,19 +31,24 @@
 									<span class="now">¥{{food.price}}</span>
 									<span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</span>
 								</div>
+								<div class="cartcontrol-wrapper">
+									<cartcontrol v-bind:food="food"></cartcontrol>
+								</div>
 							</div>
 						</li>
 					</ul>
 				</li>
 			</ul>
 		</div>
-		<shopcart v-bind:deliveryPrice="seller.deliveryPrice" v-bind:min-price="seller.minPrice"></shopcart>
+		<shopcart v-bind:deliveryPrice="seller.deliveryPrice"
+		v-bind:min-price="seller.minPrice"></shopcart>
 	</div>
 </template>
 
 <script>
 import Bscroll from 'better-scroll';
 import shopcart from 'components/shopcart/shopcart';
+import cartcontrol from 'components/cartcontrol/cartcontrol';
 
 const ERR_OK = 0;
 
@@ -101,6 +106,7 @@ export default {
       });
 
       this.foodsScroll = new Bscroll(this.$refs['foods-wrapper'], {
+        click: true,
         probeType: 3
       });
 
@@ -120,7 +126,8 @@ export default {
     }
   },
   components: {
-    shopcart
+    shopcart,
+    cartcontrol
   }
 };
 </script>
@@ -227,4 +234,8 @@ export default {
 							text-decoration: line-through
 							font-size: 10px
 							color: rgb(147, 153, 159)
+					.cartcontrol
+						position: absolute
+						right: 0
+						bottom: 12px
 </style>
