@@ -40,7 +40,7 @@
 				</li>
 			</ul>
 		</div>
-		<shopcart v-bind:deliveryPrice="seller.deliveryPrice"
+		<shopcart v-bind:deliveryPrice="seller.deliveryPrice" ref="shopcart"
 		v-bind:min-price="seller.minPrice" v-bind:select-foods="selectFoods"></shopcart>
 	</div>
 </template>
@@ -111,6 +111,10 @@ export default {
       let el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
     },
+    _drop(target) {
+      console.log(this.$refs['shopcart']);
+      this.$refs['shopcart'].drop(target);
+    },
     _initScroll() {
       this.menuScroll = new Bscroll(this.$refs['menu-wrapper'], {
         click: true
@@ -139,6 +143,12 @@ export default {
   components: {
     shopcart,
     cartcontrol
+  },
+  events: {
+    'cart.add'(target) {
+      console.log('hi');
+      this._drop(target);
+    }
   }
 };
 </script>

@@ -24,6 +24,7 @@
     },
     methods: {
       addCart(event) {
+        let eventHub = new Vue();
         if (!event._constructed) {
           return;
         }
@@ -32,6 +33,7 @@
         } else {
           this.food.count ++;
         }
+        eventHub.$emit('cart.add', event.target);
       },
       decreaseCart(event) {
         if (!event._constructed) {

@@ -18,6 +18,13 @@
         <div class="pay" v-bind:class="payClass">{{payDesc}}</div>
       </div>
     </div>
+    <transition name="drop">
+      <div class="ball-container">
+        <div v-for="ball in balls" v-show="ball.show" class="ball">
+          <div class="inner"></div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -38,6 +45,27 @@
         type: Number,
         default: 0
       }
+    },
+    data() {
+      return {
+        balls: [
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          }
+        ]
+      };
     },
     computed: {
       totalPrice() {
@@ -70,6 +98,11 @@
         } else {
           return 'enough';
         }
+      }
+    },
+    methods: {
+      drop(el) {
+        console.log(el);
       }
     }
   };
@@ -164,4 +197,19 @@
           &.enough
             background: #00b43c
             color: #fff
+    .drop-enter-active, .drop-leave-active
+      transition: all 0.4s
+    .drop-enter, .drop-leave-active
+      opacity: 0
+    .ball-container
+      .ball
+        position: fixed
+        left: 32px
+        bottom: 22px
+        z-index: 200
+        .inner
+          width: 16px
+          height: 16px
+          border-radius: 50%
+          background: rgb(0, 160, 220)
 </style>
